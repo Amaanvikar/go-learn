@@ -1,72 +1,105 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
-type course struct {
-	Name     string `json:"coursename"`
-	Price    int
-	Platform string   `json:"website"`
+type user struct {
+	username string `json:"name"`
+	email    string `json:"email"`
+	age      int
 	Password string   `json:"-"`
 	Tags     []string `json:"tags,omitempty"`
 }
 
+// type user struct {
+// 	username string `json:"name"`
+// 	email    string `json:"email"`
+// 	age      int
+// 	Password string   `json:"-"`
+// 	Tags     []string `json:"tags,omitempty"`
+// }
+
+// type course struct {
+// 	Name     string `json:"coursename"`
+// 	Price    int
+// 	Platform string   `json:"website"`
+// 	Password string   `json:"-"`
+// 	Tags     []string `json:"tags,omitempty"`
+// }
+
+// func main() {
+// 	fmt.Println("Json encoding in go-lang")
+// 	EncodeJson()
+// 	DecodeJson()
+// }
+
 func main() {
-	fmt.Println("Json encoding in go-lang")
-	EncodeJson()
-	DecodeJson()
+	fmt.Println("Structs in golang")
+
+	user1 := user{
+		username: "Aman",
+		email:    "aman@go.dev",
+		age:      24,
+		Password: "abc123",
+		Tags:     []string{"Go", "MCP", "Backend"},
+	}
+
+	fmt.Println(user1.username)
+	fmt.Println(user1.username)
+	fmt.Println(user1.email)
+	fmt.Println(user1.age)
+	fmt.Println(user1.Tags)
 }
 
-func EncodeJson() {
-	courses := []course{
-		{"Reactjs Bootcamp", 299, "reactaman.dev", "abc124", []string{"web-dev", "js"}},
-		{"Golang backend", 199, "golangaman.dev", "xyz124", []string{"backend", "go"}},
-		{"Mernstack", 299, "mernaman.dev", "124abc", nil},
-	}
+// func EncodeJson() {
+// 	courses := []course{
+// 		{"Reactjs Bootcamp", 299, "reactaman.dev", "abc124", []string{"web-dev", "js"}},
+// 		{"Golang backend", 199, "golangaman.dev", "xyz124", []string{"backend", "go"}},
+// 		{"Mernstack", 299, "mernaman.dev", "124abc", nil},
+// 	}
 
-	finalJson, err := json.MarshalIndent(courses, "", "")
+// 	finalJson, err := json.MarshalIndent(courses, "", "")
 
-	if err != nil {
-		panic(err)
-	}
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	fmt.Printf("%s\n", finalJson)
-}
+// 	fmt.Printf("%s\n", finalJson)
+// }
 
-func DecodeJson() {
-	jsonDataFromWeb := []byte(`
-	
-	{
-	"coursename": "Reactjs Bootcamp",
-	"Price": 299,
-	"website": "reactaman.dev",
-	"Password": "abc124",
-	"Tags": ["web-dev","js"]
-	}
-	`)
+// func DecodeJson() {
+// 	jsonDataFromWeb := []byte(`
 
-	var courses course
+// 	{
+// 	"coursename": "Reactjs Bootcamp",
+// 	"Price": 299,
+// 	"website": "reactaman.dev",
+// 	"Password": "abc124",
+// 	"Tags": ["web-dev","js"]
+// 	}
+// 	`)
 
-	checkValid := json.Valid(jsonDataFromWeb)
+// 	var courses course
 
-	if checkValid {
-		fmt.Println("Valid Json")
-		json.Unmarshal(jsonDataFromWeb, &courses)
-		fmt.Printf("%#v\n", courses)
-	} else {
-		fmt.Println("Invalid Json")
-	}
+// 	checkValid := json.Valid(jsonDataFromWeb)
 
-	// some cases where you just want to add data to key value
+// 	if checkValid {
+// 		fmt.Println("Valid Json")
+// 		json.Unmarshal(jsonDataFromWeb, &courses)
+// 		fmt.Printf("%#v\n", courses)
+// 	} else {
+// 		fmt.Println("Invalid Json")
+// 	}
 
-	var myOnlineData map[string]interface{}
-	json.Unmarshal(jsonDataFromWeb, &myOnlineData)
-	fmt.Println("%#\n", myOnlineData)
+// 	// some cases where you just want to add data to key value
 
-	for k, v := range myOnlineData {
-		fmt.Printf("key is %v and value is %v and Type is: %T\n", k, v, v)
-	}
+// 	var myOnlineData map[string]interface{}
+// 	json.Unmarshal(jsonDataFromWeb, &myOnlineData)
+// 	fmt.Println("%#\n", myOnlineData)
 
-}
+// 	for k, v := range myOnlineData {
+// 		fmt.Printf("key is %v and value is %v and Type is: %T\n", k, v, v)
+// 	}
+
+// }

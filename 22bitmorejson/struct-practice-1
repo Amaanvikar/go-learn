@@ -1,0 +1,28 @@
+
+
+package main
+
+
+type user struct(){
+	username string `json:"name"`
+	email string `json:"email"`
+	age int 
+	Password string `json:"-"`
+	Tags []string `json:"tags,omitempty"`
+
+
+}
+
+func main(){
+fmt.Println("Structs in golang")
+
+user1 := user{
+	username: "Aman",
+	email: "aman@go.dev",
+	age: 24,
+	Password: "abc123",
+	Tags: []string{"Go", "MCP","Backend"},
+}
+
+fmt.Println(user)
+}
