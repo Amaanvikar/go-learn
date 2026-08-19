@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -36,7 +37,23 @@ func (c *Course) IsEmpty() bool {
 func main() {
 	r := mux.NewRouter()
 
+	// seeding
+
+	courses = append(courses, Course{CourseId: "2", CourseName: "ReactJS", CoursePrice: 299, Author: &Author{FullName: "Aman Pathan", Website: "aman@dev"}})
+
+	courses = append(courses, Course{CourseId: "4", CourseName: "Golang", CoursePrice: 199, Author: &Author{FullName: "Vikar Khan", Website: "vikar@dev"}})
+
+	// routing
+
+	r.HandleFunc("/", serveHome).Methods("GET")
+	r.HandleFunc("/courses", getAllCourses).Methods("GET")
 	r.HandleFunc("/course/{id}", getOneCourse).Methods("GET")
+	r.HandleFunc("/course", createOneCourse).Methods("POST")
+	r.HandleFunc("/course/{id}", updateCourses).Methods("PUT")
+	r.HandleFunc("/course/{id}", deleteOneCourse).Methods("DELETE")
+
+	// listen to a port
+	log.Fatal(http.ListenAndServe(":4000", r))
 
 	fmt.Println("Server running on :8000")
 	http.ListenAndServe(":8000", r)
@@ -50,7 +67,7 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("<h1>This is Go-lang series</h1>"))
 }
 
-func getAllCourses(w http.ResponseWriter, r http.Request) {
+func getAllCourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get All courses")
 	w.Header().Set("content-Type", "application/json")
 	json.NewEncoder(w).Encode(courses)
